@@ -1,0 +1,20 @@
+﻿@page "/counter"
+
+<PageTitle>Counter</PageTitle>
+
+<section class="p-4 mt-14">
+    <h1 class="text-2xl mb-4">Counter</h1>
+
+    <p class="text-md mb-4" role="status">Current count: @_currentCount</p>
+
+    <button class="bg-primary-500 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm text-white px-5 py-2.5 text-center me-2" @onclick="IncrementCount">Click me</button>
+</section>
+
+@code {
+    private int _currentCount = 0;
+
+    private void IncrementCount()
+    {
+        _currentCount++;
+    }
+}

@@ -1,0 +1,20 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <base href="/" />
+    <link rel="stylesheet" href="app.min.css" />
+    <link rel="stylesheet" href="BlazorClassBasedThemeChanger.styles.css" />
+    <script src="app.js"></script>
+    <HeadOutlet @rendermode="InteractiveServer" />
+</head>
+
+<body class="tracking-tight antialiased text-gray-900 dark:text-slate-300 bg-white dark:bg-gray-800">
+    <Routes @rendermode="InteractiveServer"/>
+    <script src="_framework/blazor.web.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script>
+</body>
+
+</html>

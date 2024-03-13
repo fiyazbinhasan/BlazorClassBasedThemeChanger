@@ -1,0 +1,51 @@
+﻿@inject IJSRuntime Js
+@inject ProtectedLocalStorage ProtectedLocalStorage
+@inject AppState AppState
+
+<button
+      class="text-gray-500 hover:bg-bg-gray-800 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg text-sm p-2.5 inline-flex items-center"
+        @onclick="ToggleTheme">
+    @if(AppState.Theme == "dark")
+    {
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-moon"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z" /></svg>
+    } else
+    {
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-sun"><circle cx="12" cy="12" r="4" /><path d="M12 2v2" /><path d="M12 20v2" /><path d="m4.93 4.93 1.41 1.41" /><path d="m17.66 17.66 1.41 1.41" /><path d="M2 12h2" /><path d="M20 12h2" /><path d="m6.34 17.66-1.41 1.41" /><path d="m19.07 4.93-1.41 1.41" /></svg>
+    }
+</button>
+
+@code {
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await SetTheme();
+        }
+    }
+
+    private async Task SetTheme()
+    {
+        var result = await ProtectedLocalStorage.GetAsync<string>("theme");
+        var theme = result.Success ? result.Value : "light";
+        if (theme != null) AppState.SetTheme(theme);
+    }
+
+    private async Task ToggleTheme()
+    {
+        switch (AppState.Theme)
+        {
+            case "dark":
+                await Js.InvokeVoidAsync("toggleTheme", "dark");
+                await ProtectedLocalStorage.SetAsync("theme", "light");
+                AppState.SetTheme("light");
+                break;
+            default:
+                await Js.InvokeVoidAsync("toggleTheme", "light");
+                await ProtectedLocalStorage.SetAsync("theme", "dark");
+                AppState.SetTheme("dark");
+                break;
+        }
+    }
+}
+
+
